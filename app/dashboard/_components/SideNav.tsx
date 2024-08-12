@@ -32,8 +32,8 @@ function SideNav() {
   <div className='flex justify-center '>
   <Image src={'/logo.svg'} alt='logo' width={120} height={100}/>
   </div>
-  <hr className='my-6 h-3'/>
-  <div className='mt-10'>
+  <hr className='my-6 border'/>
+  <div className='mt-3'>
   {MenuList.map((menu, index) => (
   <div className='flex gap-3 mb-2 p-3 hover:bg-primary hover:text-white rounded-lg cursor-pointer items-center' key={index}>
    <menu.icon className='h-6 w-6'/>
