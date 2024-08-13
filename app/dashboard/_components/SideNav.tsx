@@ -33,10 +33,10 @@ function SideNav() {
   ]
   const path = usePathname();
   useEffect (()=>{
-  console.log(path);   
+  // console.log(path);   
   },[])
   return (
-  <div className='h-screen p-5 shadow-sm border'>
+  <div className='h-screen p-5 shadow-sm border bg-white'>
   <div className='flex justify-center '>
   <Image src={'/logo.svg'} alt='logo' width={120} height={100}/>
   </div>
