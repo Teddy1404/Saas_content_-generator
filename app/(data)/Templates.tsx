@@ -5,7 +5,7 @@ export default [
         desc:"Blog title depends on your blog information",
         category:"Blog",
         icon:'https://cdn-icons-png.flaticon.com/128/4693/4693265.png',
-        aiPrompt:'Give me 5 blog topic idea in a bullet wise only based on given niche and outlint and give me result in Rich text editor format. ',
+        aiPrompt:'Give me 5 blog topic idea in a bullet wise only based on given niche and its outlint basically outline about the topic  and give me result in Rich text editor format. ',
         slug:'generate-blog-title',
         form:[
             {

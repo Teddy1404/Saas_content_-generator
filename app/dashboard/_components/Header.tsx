@@ -11,7 +11,7 @@ function Header() {
       </div>
       <div>
       <h2 className='bg-primary p-1 rounded-full text-xs text-white px-3 md:px-2 md:block hidden'>
-          Join Membership just for $9.99/month
+          🔥Join Membership just for $9.99/month
         </h2>
       </div>
     </div>
