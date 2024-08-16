@@ -7,7 +7,11 @@ import Templates from '@/app/(data)/Templates'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { chatSession } from '@/utils/Aimodel'
+import { chatSession } from '@/utils/Aimodel' 
+import { db } from '@/utils/db'
+import { AIOutput } from '@/utils/schema'
+import { useUser } from '@clerk/nextjs'
+import moment from 'moment'
 
 interface PROPS{
  params:{
@@ -19,19 +23,42 @@ function CreateNewContent(props:PROPS) {
    const selectedTemplate:TEMPLATE | undefined=Templates?.find((item)=>item.slug==props.params['template-slug']);
    const [loading,setLoading] = useState(false);
    const [aiOutput, setAIOutput] = useState<string>('');
-
-   const GenerateAiContent= async(formData:any)=>{
+  const {user} = useUser();
+ 
+  const GenerateAiContent = async (formData: any) => {
     setLoading(true);
     const SelectedPrompt = selectedTemplate?.aiPrompt;
-    const FinalAIPrompt = JSON.stringify(formData)+","+SelectedPrompt;
-    const result  = await chatSession.sendMessage(FinalAIPrompt);
+    const FinalAIPrompt = JSON.stringify(formData) + "," + SelectedPrompt;
 
-    console.log(result.response.text());
-    setAIOutput(result.response.text());
+    console.log("Form Data:", formData); // Debugging line
+
+    const result = await chatSession.sendMessage(FinalAIPrompt);
+  
+
+    setAIOutput(result?.response.text());
+    await SaveInDb(formData, selectedTemplate?.slug, (result?.response.text()));
     setLoading(false);
-   }
+}
 
-  return (
+
+const SaveInDb = async (formData: any, slug: any, aiResp: string) => {
+  if (!formData) {
+      console.error("formData is null or undefined");
+      return;
+  }
+  
+  const result = await db.insert(AIOutput).values({
+      formData: formData,
+      templateSlug: slug,
+      aiResponse: aiResp,
+      createdBy: user?.primaryEmailAddress?.emailAddress,
+      createdAt: moment().format('DD/MM/yyyy'),
+  });
+  console.log(result);
+}
+
+
+  return ( 
    <>
     <div className='p-5'>
       <Link href={'/dashboard'}>
