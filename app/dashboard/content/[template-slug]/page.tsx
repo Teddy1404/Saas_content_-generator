@@ -83,7 +83,7 @@
 // export default CreateNewContent
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import FormSection from '../_components/FormSection';
 import OutputSection from '../_components/OutputSection';
 import { TEMPLATE } from '../../_components/TemplateList';
@@ -97,6 +97,7 @@ import { AIOutput } from '@/utils/schema';
 import { useUser } from '@clerk/nextjs';
 import moment from 'moment';
 import { useHistoryContext } from '@/app/(context)/HistoryProvider';
+import { TotalUsageContext } from '@/app/(context)/TotalUsageContext';
 
 interface PROPS {
     params: {
@@ -112,8 +113,15 @@ function CreateNewContent(props: PROPS) {
     const [aiOutput, setAIOutput] = useState<string>('');
     const { user } = useUser();
     const { setHistoryData } = useHistoryContext();
+    const {totalUsage,setTotalUsage}=useContext(TotalUsageContext);
+
 
     const GenerateAiContent = async (formData: any) => {
+        if(totalUsage >= 10000){
+            alert('You have reached your daily limit of 10,000 words. Please try again tomorrow');
+            
+            return ;
+        }
         setLoading(true);
         const SelectedPrompt = selectedTemplate?.aiPrompt;
         const FinalAIPrompt = JSON.stringify(formData) + ',' + SelectedPrompt;
