@@ -4,7 +4,7 @@ export default clerkMiddleware((auth, req) => {
   });
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
-  '/'
+  
 ]);
 
 

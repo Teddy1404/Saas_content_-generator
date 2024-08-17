@@ -10,8 +10,10 @@ function layout({children,
 }>) {
 
   const [totalUsage, setTotalUsage] = useState<Number>(0);
+
   return (
     <TotalUsageContext.Provider value={{totalUsage,setTotalUsage}}>
+ 
    <div className='bg-slate-100 h-screen'>
     <div className='md:w-64 hidden md:block fixed'>
     <SideNav/>
